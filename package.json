@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "fastify": "^4.1.0",
+    "fastify-cookie": "^5.7.0",
+    "mongoose": "^6.4.0",
+    "ts-node": "^10.8.1"
+  },
+  "name": "fastify",
+  "version": "1.0.0",
+  "description": "Prueba con fastify, login y registro",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "node build/src",
+    "ts-node": "ts-node src/index.ts"
+  },
+  "author": "DANJOCC",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "pino-pretty": "^8.1.0",
+    "typescript": "^4.7.4"
+  }
+}

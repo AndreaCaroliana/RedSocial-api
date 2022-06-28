@@ -1,23 +1,26 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import User from "../interfaces/user.interface";
 import user from "../models/user.model";
+import { CustomRequest } from "../types/user.type";
+import bcrypt from 'bcrypt';
 
-type CustomRequest= FastifyRequest<{ //Modificacion del tipo FastifyRequest para manejo de body
-    Body: User
-}>
+const salt: number=13;
 class Bouncer{
-
-    //handler para registro de usuario
 
     public async register(req: CustomRequest, rep: FastifyReply): Promise<any>{
         const {username, email, password}=req.body;
         const thereIsUser= await user.findOne({email: email})
-        if (thereIsUser === null){
-            const newUser= await new user({username, email, password})
+        if (thereIsUser === null && password!==undefined){
+            const hash= await bcrypt.hashSync(password,salt);
+            const newUser= await new user({username, email, password: hash})
             await newUser.save()
+    
             return {msg: 'succesful operation, new user registered', newUser};
         }
-        else if(thereIsUser.username === username || thereIsUser.email === email){
+        else if(password===undefined){
+            return {msg: 'Please, put a password'};
+        }
+        else if(thereIsUser !==null && (thereIsUser.username === username || thereIsUser.email === email)){
             return {msg: 'user already existed, please change username or email'}
         }
     }
@@ -27,9 +30,10 @@ class Bouncer{
     public async login(req: CustomRequest, rep: FastifyReply): Promise<any>{
         const {email, password}=req.body;
         const thereIsUser= await user.findOne({email: email})
-        if(thereIsUser=== null) return {msg: 'user dont exist'};
-        else if(thereIsUser.password!==password) return {msg: 'incorrect password'}
-        else if(thereIsUser.password===password) return {msg: 'free pass'}
+        if(thereIsUser=== null) return rep.status(403).send('user dont existed');
+        else if(thereIsUser.password===undefined || password===undefined) return rep.status(403).send('password is empty');
+        else if(bcrypt.compareSync(password, thereIsUser.password)) return {msg: 'free pass'};
+        else return rep.status(403).send('incorrect password');
 
     }
 }

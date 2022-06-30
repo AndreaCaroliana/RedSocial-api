@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import User from "../interfaces/user.interface";
+import tweets from "../models/tweets.model";
 import user from "../models/user.model";
 import { CustomRequest } from "../types/user.type";
 import bcrypt from 'bcrypt';
@@ -9,11 +9,13 @@ class Bouncer{
 
     public async register(req: CustomRequest, rep: FastifyReply): Promise<any>{
         const {username, email, password}=req.body;
-        const thereIsUser= await user.findOne({email: email})
+        const thereIsUser= await user.findOne({email: email});
         if (thereIsUser === null && password!==undefined){
             const hash= await bcrypt.hashSync(password,salt);
-            const newUser= await new user({username, email, password: hash})
-            await newUser.save()
+            const newUser= await new user({username, email, password: hash});
+            const userTweets= await new tweets({username, tweets: []});
+            await newUser.save();
+            await userTweets.save();
     
             return {msg: 'succesful operation, new user registered', newUser};
         }

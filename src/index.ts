@@ -1,13 +1,21 @@
 import Fastify from "fastify";
-import routes from './routes/user.routes'
+import UserRoutes from './routes/user.routes'
 import connection from './utils/database.utils'
+import fastifyJwt from "@fastify/jwt";
+import config from './config';
+import formbody from '@fastify/formbody'
+import TweetsRoutes from "./routes/tweets.routes";
+
 connection()
+
 const PORT = Number(process.env.PORT || 3000);
 
 const fastify = Fastify({ logger: { transport: { target: "pino-pretty" } } });
 
-fastify.register(routes);
-
+fastify.register(formbody)
+fastify.register(fastifyJwt,{secret: config.SECRET});
+fastify.register(UserRoutes);
+fastify.register(TweetsRoutes);
 
 const start = async () => {
   await fastify.listen({ port: PORT }, (err, address) => {

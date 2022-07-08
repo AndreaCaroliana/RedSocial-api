@@ -8,6 +8,7 @@ const salt: number=13;
 class Bouncer{
 
     public async register(req: CustomRequest, rep: FastifyReply): Promise<any>{
+        console.log(req.body)
         const {username, email, password}=req.body;
         const thereIsUser= await user.findOne({email: email});
         if (thereIsUser === null && password!==undefined){
@@ -32,10 +33,13 @@ class Bouncer{
     public async login(req: CustomRequest, rep: FastifyReply): Promise<any>{
         const {email, password}=req.body;
         const thereIsUser= await user.findOne({email: email})
-        if(thereIsUser=== null) return rep.status(403).send('user dont existed');
-        else if(thereIsUser.password===undefined || password===undefined) return rep.status(403).send('password is empty');
-        else if(bcrypt.compareSync(password, thereIsUser.password)) return {msg: 'free pass'};
-        else return rep.status(403).send('incorrect password');
+        if(thereIsUser=== null) return rep.status(403).send({msg:'user dont existed'});
+        else if(thereIsUser.password===undefined || password===undefined) return rep.status(403).send({msg:'password is empty'});
+        else if(bcrypt.compareSync(password, thereIsUser.password)){
+            const userTweets= await tweets.findOne({username:thereIsUser.username});
+            return rep.status(200).send({msg: 'free pass', username:thereIsUser.username, tweets:userTweets?.tweets});
+        }
+        else return rep.status(403).send({msg:'incorrect password'});
 
     }
 }

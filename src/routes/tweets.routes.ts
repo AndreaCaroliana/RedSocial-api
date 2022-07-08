@@ -27,6 +27,7 @@ const TweetsRoutes: FastifyPluginCallback = (fastify: FastifyInstance, opt: any,
 
     fastify.put('/newTweet', AuthOptions ,whisper.newTweet);
     fastify.get('/tweets', AuthOptions ,whisper.getTweets);
+    fastify.delete('/deleteTweet', AuthOptions ,whisper.deleteTweet);
     done()
 }
 

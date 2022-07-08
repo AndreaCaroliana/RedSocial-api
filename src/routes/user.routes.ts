@@ -7,8 +7,13 @@ const UserRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, do
         const SingInOptions={
                 preSerialization: (request: CustomRequest, reply: FastifyReply, payload: any, done: any)=>{
                         const err=null;
-                        const newPayload={ms: 'user connected',token: fastify.jwt.sign({payload}, {expiresIn: '24h'})}
-                        done(err, newPayload);
+                        if(payload.msg==='free pass'){
+                                const newPayload={...payload,token: fastify.jwt.sign({payload}, {expiresIn: '24h'})}
+                                 done(err, newPayload);
+                        }
+                        else{
+                                done(err, payload);
+                        }
                 }
         }
 

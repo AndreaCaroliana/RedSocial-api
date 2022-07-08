@@ -6,11 +6,7 @@ import config from './config';
 import formbody from '@fastify/formbody'
 import TweetsRoutes from "./routes/tweets.routes";
 import InfluencerRoutes from "./routes/influencer.routes";
-<<<<<<< HEAD
 import cors from "@fastify/cors"
-=======
-
->>>>>>> ecccac5d3318898c2312c102dc16125ada8469e8
 connection()
 
 const PORT = Number(process.env.PORT || 3000);

@@ -4,7 +4,7 @@ import tweets from "../models/tweets.model";
 class Whisper{
     public async newTweet(request:CustomRequest, reply: FastifyReply): Promise<any>{
         const {username, tweet} = request.body;
-        const user= await await tweets.findOneAndUpdate({username}, {$push:{tweets: tweet}});
+        const user= await tweets.findOneAndUpdate({username}, {$push:{tweets: tweet}});
         if(user === null) return {msg: "User cant be found"}
         else{
             return reply.status(201).send({msg: 'tweet guardado', user})

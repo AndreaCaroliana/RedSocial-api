@@ -2,9 +2,10 @@ import { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest} f
 import { admin } from "../controllers/admin.controllers";
 import { bouncer } from "../controllers/bouncer.controllers";
 import { influencer } from "../controllers/influencer.controller";
-import { CustomRequest } from "../types/user.type";
+import { CustomRequest } from "../types/influencer.type";
 
-const UserRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, done: any)=>{
+
+const InfluencerRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, done: any)=>{
         const AuthOptions={
                 onRequest: (request: CustomRequest, reply: FastifyReply, done: any)=>{
                         const err=null;
@@ -24,29 +25,15 @@ const UserRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, do
                         done(err);
                 }
             }
-        const SingInOptions={
-                preSerialization: (request: CustomRequest, reply: FastifyReply, payload: any, done: any)=>{
-                        const err=null;
-                        if(payload.msg==='free pass'){
-                                const newPayload={...payload,token: fastify.jwt.sign({payload}, {expiresIn: '24h'})}
-                                 done(err, newPayload);
-                        }
-                        else{
-                                done(err, payload);
-                        }
-                }
-        }
+      
 
 
+        fastify.put('/follow', AuthOptions, influencer.newFollower);
+        fastify.get('/getFollowers', AuthOptions, influencer.getFollowers);
+        fastify.get('/getFollows', AuthOptions, influencer.getFollows);
+        fastify.delete('/unfollow', AuthOptions,influencer.unfollow);
 
-
-        fastify.post('/register',bouncer.register);
-        fastify.post('/login', SingInOptions, bouncer.login);
-        fastify.put('/updateProfile', AuthOptions, admin.updateUser);
-        fastify.get('/getUser', AuthOptions, admin.getUser);
-        fastify.get('/getProfile', AuthOptions, admin.getProfile);
-        fastify.get('/getProfile', AuthOptions, admin.getProfile);
         done()
 }
 
-export default UserRoutes;
+export default InfluencerRoutes;

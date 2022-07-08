@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import tweets from "../models/tweets.model";
-import user from "../models/user.model";
+import user, { socialUser} from "../models/user.model";
 import { CustomRequest } from "../types/user.type";
 import bcrypt from 'bcrypt';
 
@@ -13,8 +13,10 @@ class Bouncer{
         const thereIsUser= await user.findOne({email: email});
         if (thereIsUser === null && password!==undefined){
             const hash= await bcrypt.hashSync(password,salt);
-            const newUser= await new user({username, email, password: hash});
+            const newUser= await new user({username, email, password: hash, location:'', name:'',birthday:'', bio:'',});
             const userTweets= await new tweets({username, tweets: []});
+            const socialUserData= await new socialUser({username, followers:[], follows:[]})
+            await socialUserData.save()
             await newUser.save();
             await userTweets.save();
     

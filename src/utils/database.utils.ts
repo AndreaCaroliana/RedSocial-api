@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const URLcluster:string="mongodb+srv://projecto1:projecto1@trivia.zhwqbyq.mongodb.net/social?retryWrites=true&w=majority";
 
-const connection=()=>{
+const connection=async ()=>{
     mongoose.connect(URLcluster)
     .then(()=>{
         console.log('Connecting to social database')

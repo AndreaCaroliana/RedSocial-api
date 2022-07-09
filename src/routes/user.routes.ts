@@ -4,7 +4,7 @@ import { bouncer } from "../controllers/bouncer.controllers";
 import { influencer } from "../controllers/influencer.controller";
 import { CustomRequest } from "../types/user.type";
 
-const UserRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, done: any)=>{
+const UserRoutes: FastifyPluginCallback= async (fastify: FastifyInstance, opt: any, done: any)=>{
         const AuthOptions={
                 onRequest: (request: CustomRequest, reply: FastifyReply, done: any)=>{
                         const err=null;

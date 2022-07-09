@@ -5,7 +5,7 @@ import { influencer } from "../controllers/influencer.controller";
 import { CustomRequest } from "../types/influencer.type";
 
 
-const InfluencerRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, done: any)=>{
+const InfluencerRoutes: FastifyPluginCallback= async (fastify: FastifyInstance, opt: any, done: any)=>{
         const AuthOptions={
                 onRequest: (request: CustomRequest, reply: FastifyReply, done: any)=>{
                         const err=null;

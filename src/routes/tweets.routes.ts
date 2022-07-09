@@ -2,7 +2,7 @@ import fastify, { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyR
 import { whisper } from "../controllers/whisper.controllers";
 import { CustomRequest } from "../types/tweet.type";
 
-const TweetsRoutes: FastifyPluginCallback = (fastify: FastifyInstance, opt: any, done: any)=>{
+const TweetsRoutes: FastifyPluginCallback = async (fastify: FastifyInstance, opt: any, done: any)=>{
     
 
     const AuthOptions={

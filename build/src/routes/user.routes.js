@@ -39,7 +39,6 @@ const UserRoutes = (fastify, opt, done) => {
     fastify.put('/updateProfile', AuthOptions, admin_controllers_1.admin.updateUser);
     fastify.get('/getUser', AuthOptions, admin_controllers_1.admin.getUser);
     fastify.get('/getProfile', AuthOptions, admin_controllers_1.admin.getProfile);
-    fastify.get('/getProfile', AuthOptions, admin_controllers_1.admin.getProfile);
     done();
 };
 exports.default = UserRoutes;

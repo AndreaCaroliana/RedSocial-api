@@ -12,13 +12,19 @@ connection()
 
 
 const fastify = Fastify({ logger: true });
-
+fastify.log.info('no tardo')
 fastify.register(cors)
+fastify.log.info('no tardo 1')
 fastify.register(formbody)
+fastify.log.info('no tardo 2')
 fastify.register(fastifyJwt,{secret: config.SECRET});
+fastify.log.info('no tardo 3')
 fastify.register(UserRoutes);
+fastify.log.info('no tardo 4')
 fastify.register(TweetsRoutes);
+fastify.log.info('no tardo 5')
 fastify.register(InfluencerRoutes)
+fastify.log.info('no tardo 6')
 
  fastify.listen({ port: Number(process.env.HOST || 3000), host: '0.0.0.0'}, (err, address) => {
     if (err) {

@@ -30,12 +30,12 @@ fastify.register(user_routes_1.default);
 fastify.register(tweets_routes_1.default);
 fastify.register(influencer_routes_1.default);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield fastify.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
+    yield fastify.listen({ port: Number(process.env.HOST || 3000), host: '0.0.0.0' }, (err, address) => {
         if (err) {
             fastify.log.error(err);
             process.exit(1);
         }
-        fastify.log.info(`server listening on ${address}`);
+        console.log(`server listening on ${fastify}`);
     });
 });
 start();

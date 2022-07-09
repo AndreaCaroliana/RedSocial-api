@@ -45,7 +45,6 @@ const UserRoutes: FastifyPluginCallback= (fastify: FastifyInstance, opt: any, do
         fastify.put('/updateProfile', AuthOptions, admin.updateUser);
         fastify.get('/getUser', AuthOptions, admin.getUser);
         fastify.get('/getProfile', AuthOptions, admin.getProfile);
-        fastify.get('/getProfile', AuthOptions, admin.getProfile);
         done()
 }
 

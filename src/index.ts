@@ -13,7 +13,7 @@ const PORT = Number(process.env.PORT || 3000);
 
 const HOST= process.env.HOST || '192.168.1.103'
 
-const fastify = Fastify({ logger: { transport: { target: "pino-pretty" } } });
+const fastify = Fastify({ logger: true });
 
 fastify.register(cors)
 fastify.register(formbody)

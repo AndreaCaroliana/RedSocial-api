@@ -24,7 +24,7 @@ const cors_1 = __importDefault(require("@fastify/cors"));
 (0, database_utils_1.default)();
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '192.168.1.103';
-const fastify = (0, fastify_1.default)({ logger: { transport: { target: "pino-pretty" } } });
+const fastify = (0, fastify_1.default)({ logger: true });
 fastify.register(cors_1.default);
 fastify.register(formbody_1.default);
 fastify.register(jwt_1.default, { secret: config_1.default.SECRET });

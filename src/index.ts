@@ -11,8 +11,6 @@ connection()
 
 const PORT = Number(process.env.PORT || 3000);
 
-const HOST= process.env.HOST || '192.168.1.103'
-
 const fastify = Fastify({ logger: { transport: { target: "pino-pretty" } } });
 
 fastify.register(cors)
@@ -23,7 +21,7 @@ fastify.register(TweetsRoutes);
 fastify.register(InfluencerRoutes)
 
 const start = async () => {
-  await fastify.listen({ port: PORT, host:HOST}, (err, address) => {
+  await fastify.listen({ port: PORT}, (err, address) => {
     if (err) {
       fastify.log.error(err);
       process.exit(1);

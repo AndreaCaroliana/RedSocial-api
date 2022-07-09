@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import tweets from "../models/tweets.model";
 import user, { socialUser} from "../models/user.model";
 import { CustomRequest } from "../types/user.type";
@@ -19,7 +19,6 @@ class Bouncer{
             await socialUserData.save()
             await newUser.save();
             await userTweets.save();
-    
             return {msg: 'succesful operation, new user registered', newUser};
         }
         else if(password===undefined){

@@ -9,7 +9,6 @@ import InfluencerRoutes from "./routes/influencer.routes";
 import cors from "@fastify/cors"
 connection()
 
-const PORT = Number(process.env.PORT || 3000);
 
 
 const fastify = Fastify({ logger: true });
@@ -22,7 +21,7 @@ fastify.register(TweetsRoutes);
 fastify.register(InfluencerRoutes)
 
 const start = async () => {
-  await fastify.listen({ port: PORT}, (err, address) => {
+  await fastify.listen({ port: 3000, host: '0.0.0.0'}, (err, address) => {
     if (err) {
       fastify.log.error(err);
       process.exit(1);

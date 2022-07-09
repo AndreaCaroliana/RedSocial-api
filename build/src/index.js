@@ -35,6 +35,7 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
             fastify.log.error(err);
             process.exit(1);
         }
+        fastify.log.info(`server listening on ${address}`);
     });
 });
 start();

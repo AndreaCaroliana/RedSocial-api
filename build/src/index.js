@@ -22,7 +22,6 @@ const tweets_routes_1 = __importDefault(require("./routes/tweets.routes"));
 const influencer_routes_1 = __importDefault(require("./routes/influencer.routes"));
 const cors_1 = __importDefault(require("@fastify/cors"));
 (0, database_utils_1.default)();
-const PORT = Number(process.env.PORT || 3000);
 const fastify = (0, fastify_1.default)({ logger: true });
 fastify.register(cors_1.default);
 fastify.register(formbody_1.default);
@@ -31,7 +30,7 @@ fastify.register(user_routes_1.default);
 fastify.register(tweets_routes_1.default);
 fastify.register(influencer_routes_1.default);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield fastify.listen({ port: PORT }, (err, address) => {
+    yield fastify.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
         if (err) {
             fastify.log.error(err);
             process.exit(1);
